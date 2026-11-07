@@ -1533,6 +1533,294 @@ html.white .nightfx {
 html.night .nightfx {
   background: radial-gradient(circle at var(--mx, 50vw) var(--my, 30vh), rgba(255,196,120,.22) 0, rgba(255,180,100,.10) 180px, rgba(40,26,12,.30) 440px, rgba(22,15,8,.48) 920px);
 }
+
+/* === MOBILE RESPONSIVENESS FIXES (ALL SECTIONS & CABINET) === */
+@media (max-width: 860px) {
+  html {
+    scroll-snap-type: none !important;
+  }
+  main > section {
+    min-height: auto !important;
+    height: auto !important;
+  }
+  #cabinet > .wrap {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding-block: 24px 28px !important;
+  }
+  #cabinet .folder {
+    flex: none !important;
+    display: block !important;
+    overflow: visible !important;
+  }
+  #cabinet .fgrid {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  /* 2-column grid for 6 category tabs so Russian titles never overflow */
+  #cabinet .stabs {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+    padding: 0 !important;
+    margin-bottom: 12px !important;
+    overflow: visible !important;
+  }
+  #cabinet .stabs::after {
+    display: none !important;
+  }
+  #cabinet .sx {
+    height: 40px !important;
+    padding: 0 10px !important;
+    gap: 7px !important;
+    margin: 0 !important;
+    border-radius: 10px !important;
+    justify-content: flex-start !important;
+    min-width: 0 !important;
+  }
+  #cabinet .sx .L {
+    width: 20px !important;
+    height: 20px !important;
+    font-size: 10.5px !important;
+    border-radius: 5px !important;
+    flex: none !important;
+  }
+  #cabinet .sx .nm {
+    font-size: 12.5px !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.015em !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  #cabinet .fcol.l {
+    padding: 16px 16px 14px !important;
+    gap: 10px !important;
+  }
+  #cabinet .fcol.l > .mono {
+    display: block !important;
+    font-size: 10.5px !important;
+  }
+  #cabinet .fcol.l h3 {
+    font-size: 20px !important;
+    line-height: 1.15 !important;
+  }
+  #cabinet .fcol.l .lead2 {
+    display: block !important;
+    font-size: 13.5px !important;
+    line-height: 1.45 !important;
+    -webkit-line-clamp: unset !important;
+  }
+  #cabinet .gchips {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    padding-right: 0 !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+  }
+  #cabinet .gchips button {
+    font-size: 12.5px !important;
+    padding: 7px 12px !important;
+  }
+  #cabinet .fcol.l .bottom > .btn {
+    min-height: 44px !important;
+    font-size: 14px !important;
+    margin-top: 4px !important;
+  }
+  /* Generous 3D stage height on mobile */
+  #cabinet .stage {
+    height: 310px !important;
+    min-height: 310px !important;
+    flex: none !important;
+  }
+  /* Clean floating 3D callouts on mobile */
+  .hs {
+    max-width: 170px !important;
+    padding: 5px 8px !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    backdrop-filter: blur(4px);
+  }
+  .hs b {
+    font-size: 10px !important;
+    line-height: 1.2 !important;
+    white-space: normal !important;
+  }
+  /* Bottom inspection panel: full spot list without clipping */
+  #cabinet .fcol.r {
+    max-height: none !important;
+    padding: 14px 16px 16px !important;
+    gap: 10px !important;
+  }
+  #cabinet .fcol.r > .lpt {
+    display: inline-flex !important;
+    font-size: 10.5px !important;
+  }
+  #cabinet .spots {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+  #cabinet .spots button {
+    display: grid !important;
+    grid-template-columns: 26px minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    justify-items: start !important;
+    text-align: left !important;
+    padding: 10px 12px !important;
+    border-radius: 11px !important;
+    min-height: 0 !important;
+    gap: 8px !important;
+  }
+  #cabinet .spots button .k {
+    font-size: 11px !important;
+  }
+  #cabinet .spots button b {
+    font-size: 13.5px !important;
+    line-height: 1.25 !important;
+  }
+  #cabinet .spots button small {
+    display: block !important;
+    font-size: 11.5px !important;
+    color: var(--mut) !important;
+    margin-top: 2px !important;
+  }
+  #cabinet .spots button.on small {
+    color: rgba(255, 255, 255, 0.72) !important;
+  }
+  #cabinet .spots button .ico {
+    display: block !important;
+    width: 16px !important;
+    height: 16px !important;
+  }
+  #cabinet .lp p {
+    display: block !important;
+    -webkit-line-clamp: unset !important;
+    overflow: visible !important;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Hero section breathing room & readable stats */
+  .hero {
+    min-height: auto !important;
+  }
+  .hero .hero-in {
+    padding-block: 22px 24px !important;
+    gap: 18px !important;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 9.2vw, 42px) !important;
+    line-height: 1.04 !important;
+  }
+  .hero-cta {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  .hero-cta .btn {
+    min-height: 46px !important;
+    font-size: 14px !important;
+  }
+  .trust {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px 14px !important;
+    padding-top: 14px !important;
+  }
+  .trust li {
+    padding: 6px 0 !important;
+  }
+  /* Section 01 Cases: 1 column on narrow phones, 2 columns with readable text */
+  #cases > .wrap,
+  #how > .wrap,
+  #trust > .wrap,
+  #faq > .wrap,
+  #request > .wrap {
+    padding-block: 28px 32px !important;
+  }
+  .cases {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 10px !important;
+  }
+  .case {
+    padding: 16px !important;
+    gap: 8px !important;
+  }
+  .case h3 {
+    font-size: 17px !important;
+  }
+  .case p {
+    display: block !important;
+    font-size: 13.5px !important;
+    line-height: 1.45 !important;
+  }
+  .case .cgo {
+    display: inline-flex !important;
+    font-size: 13px !important;
+    margin-top: 4px !important;
+  }
+  /* Section 03 How: clean vertical steps + 2-column summary bar */
+  .howbar {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px 16px !important;
+    margin-top: 16px !important;
+    padding-top: 16px !important;
+  }
+  .howbar div:nth-child(3) {
+    grid-column: 1 / -1 !important;
+  }
+  .howbar .btn {
+    grid-column: 1 / -1 !important;
+    min-height: 46px !important;
+  }
+  /* Section 04 Trust: responsive document card instead of tiny zoom:.5 */
+  #trust .doc {
+    zoom: 1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 20px 16px 24px !important;
+    font-size: 12px !important;
+  }
+  #trust .doc p.ds:nth-of-type(n+4) {
+    display: block !important;
+  }
+  #trust .stamp2 {
+    width: 92px !important;
+    height: 92px !important;
+    right: 8px !important;
+    bottom: -10px !important;
+  }
+  .kpi4 {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+  /* Section 06 Request: stack name & phone on phones */
+  #request .row2 {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 10px !important;
+  }
+  #request .card {
+    padding: 20px 16px !important;
+    gap: 12px !important;
+  }
+  #request .fld textarea {
+    min-height: 76px !important;
+    height: auto !important;
+  }
+}
+
+@media (max-width: 390px) {
+  #cabinet .sx .nm {
+    font-size: 11.5px !important;
+  }
+  #cabinet .sx {
+    padding: 0 7px !important;
+    gap: 5px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -6497,7 +6785,7 @@ function whenInView(el, fn){ inView.push({ el, fn, done: false }); }
 let settleT = 0;
 function shown(el){ const r = el.getBoundingClientRect(); if (!r.height) return false; const top = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--hh')) || 68, vh = innerHeight;
   const vis = Math.min(r.bottom, vh) - Math.max(r.top, top); return vis >= .6 * Math.min(r.height, vh - top); }
-function checkInView(){ if (!userScrolled || document.getElementById('pre')) return;
+function checkInView(){ if (document.getElementById('pre')) return;
   inView.forEach(o => { if (!o.done && shown(o.el)){ o.done = true; o.fn(); } }); }
 const settle = () => { clearTimeout(settleT); settleT = setTimeout(checkInView, 420); };
 addEventListener('scroll', () => { if (scrollY > 30) userScrolled = true; settle(); }, { passive: true }); addEventListener('resize', settle);
