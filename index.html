@@ -1821,6 +1821,185 @@ html.night .nightfx {
   }
 }
 
+
+/* === DESKTOP & FORM AUDIT FIXES (HOWBAR OVERLAP, 152-FZ CHECKBOX, SECTION CLIPPING) === */
+/* Fix Screen 2: .howbar text overlapping the CTA button */
+.howbar {
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr) minmax(0, 1.35fr) auto !important;
+  gap: 20px 28px !important;
+  align-items: center !important;
+}
+.howbar div {
+  min-width: 0 !important;
+}
+.howbar b {
+  white-space: normal !important;
+  line-height: 1.2 !important;
+  overflow-wrap: break-word !important;
+}
+.howbar .btn {
+  justify-self: end !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+@media (max-width: 960px) {
+  .howbar {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+  .howbar .btn {
+    grid-column: 1 / -1 !important;
+    justify-self: stretch !important;
+  }
+}
+
+/* Fix section top clipping when scrolling on desktop screens */
+html {
+  scroll-snap-type: none !important;
+}
+main > section:not(#cabinet) {
+  height: auto !important;
+}
+#how > .wrap,
+#cases > .wrap,
+#trust > .wrap,
+#faq > .wrap,
+#request > .wrap {
+  padding-top: clamp(36px, 5.5vh, 64px) !important;
+  padding-bottom: clamp(36px, 5.5vh, 64px) !important;
+}
+
+/* 152-FZ Consent Checkbox in Archive Style */
+.f-consent {
+  margin-top: 2px;
+}
+.consent-lb {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--mut);
+  user-select: none;
+}
+.consent-lb input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+.consent-lb .cbx {
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  border: 1.5px solid var(--ink);
+  border-radius: 6px;
+  background: var(--paper);
+  display: grid;
+  place-items: center;
+  transition: background-color .2s, border-color .2s, box-shadow .2s;
+}
+.consent-lb .cbx svg {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: var(--sheet);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform: scale(0);
+  transition: transform .2s cubic-bezier(.2, 1.5, .4, 1);
+}
+.consent-lb input:checked + .cbx {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.consent-lb input:checked + .cbx svg {
+  transform: scale(1);
+}
+.consent-lb input:focus-visible + .cbx {
+  outline: 2px solid var(--acc);
+  outline-offset: 2px;
+}
+.f-consent.err .cbx {
+  border-color: #C0392B;
+  background: #FFF5F5;
+}
+.consent-lb a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.consent-lb a:hover {
+  color: var(--acc-ink);
+}
+
+/* Privacy Policy Modal (152-FZ) */
+.pmodal {
+  position: fixed;
+  inset: 0;
+  z-index: 320;
+  background: rgba(15, 15, 16, 0.52);
+  backdrop-filter: blur(4px);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+.pmodal[hidden] {
+  display: none !important;
+}
+.pmodal-card {
+  width: min(620px, 100%);
+  max-height: 86vh;
+  overflow-y: auto;
+  background: var(--card);
+  border: 1.5px solid var(--ink);
+  border-radius: 16px;
+  padding: clamp(20px, 3vw, 32px);
+  box-shadow: 12px 12px 0 var(--ink);
+}
+.pmodal-h {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--hair);
+  margin-bottom: 14px;
+}
+.pmodal-x {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+}
+.pmodal-x:hover {
+  background: var(--ink);
+  color: var(--sheet);
+}
+.pmodal-card h3 {
+  margin: 0 0 14px;
+  font-family: var(--f-d);
+  font-size: clamp(20px, 2.2vw, 26px);
+  letter-spacing: -0.02em;
+}
+.pmodal-b p {
+  margin: 0 0 12px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--mut);
+}
+.pmodal-b b {
+  color: var(--ink);
+}
+
 </style>
 </head>
 <body>
@@ -2092,7 +2271,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         <div class="row hero-cta"><a class="btn btn-k" href="#request">Рассчитать документ <svg class="ico ar" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="btn btn-wa" href="#request" data-ch="wa"><svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg><span><span class="lf">Написать в&nbsp;</span>WhatsApp</span></a></div>
       </div>
       <ul class="trust" aria-label="Коротко о работе">
-        <li><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg><div><b>Срок <span data-site="termDays">[от __]</span> дней</b><span>от подбора кода ТН ВЭД до выгрузки</span></div></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg><div><b>Срок <span data-site="termDays">от 1</span> дня</b><span>от подбора кода ТН ВЭД до выгрузки</span></div></li>
         <li><svg class="ico" aria-hidden="true"><use href="#i-doc"/></svg><div><b>Регистрация в реестре ФСА</b><span>прямая ссылка на запись во ФГИС</span></div></li>
         <li><svg class="ico" aria-hidden="true"><use href="#i-law"/></svg><div><b>Для производства, таможни и сетей</b><span>полный пакет с протоколами испытаний</span></div></li>
         <li><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg><div><b>Работаем по всей России и ЕАЭС</b><span data-site="citiesShort">дистанционно и с отбором образцов</span></div></li>
@@ -2145,8 +2324,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     </div>
     <ol class="steps4" id="steps4"><li class="sline" role="presentation" aria-hidden="true"><i></i></li><li class="s4"><span class="sdot" aria-hidden="true"></span><span class="sn mono">Шаг 01</span><span class="sic"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg></span><h3>Аудит и код ТН ВЭД</h3><p>Изучаем ассортимент, подбираем коды ТН ВЭД / ОКПД2, определяем профильный техрегламент и оптимальную схему (1д, 3д, 1с, партия или серия).</p></li><li class="s4"><span class="sdot" aria-hidden="true"></span><span class="sn mono">Шаг 02</span><span class="sic"><svg class="ico" aria-hidden="true"><use href="#i-zoom"/></svg></span><h3>Техдокументация и макет</h3><p>Формируем комплект документов, разрабатываем недостающие ТУ или паспорта, проверяем макет этикетки EAC и согласуем черновик.</p></li><li class="s4"><span class="sdot" aria-hidden="true"></span><span class="sn mono">Шаг 03</span><span class="sic"><svg class="ico" aria-hidden="true"><use href="#i-flask"/></svg></span><h3>Испытания и протокол</h3><p>Организуем отбор и тестирование образцов в аккредитованной испытательной лаборатории с получением официального протокола испытаний (ПИ).</p></li><li class="s4"><span class="sdot" aria-hidden="true"></span><span class="sn mono">Шаг 04</span><span class="sic"><svg class="ico" aria-hidden="true"><use href="#i-doc"/></svg></span><h3>Выгрузка в реестр ФСА</h3><p>Публикуем сертификат или регистрируем декларацию во ФГИС Росаккредитации, передаём прямую ссылку на реестр и оригиналы документов.</p></li></ol>
     <div class="howbar">
-      <div><span class="mono">Стоимость</span><b><span data-site="price">[по расчёту]</span></b></div>
-      <div><span class="mono">Типовой срок</span><b><span data-site="termText">[от __ дней]</span></b></div>
+      <div><span class="mono">Стоимость</span><b><span data-site="price">от 12 000 ₽</span></b></div>
+      <div><span class="mono">Типовой срок</span><b><span data-site="termText">от 1–3 рабочих дней</span></b></div>
       <div><span class="mono">Результат</span><b>Запись в реестре ФСА + оригиналы</b></div>
       <a class="btn btn-w" href="#request">Рассчитать стоимость <svg class="ico ar" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>
@@ -2159,15 +2338,15 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     <div class="trust-g">
     <div class="docwrap"><div class="doc" id="doc">
           <span class="sample mono">Образец документа</span><span class="scanbox" aria-hidden="true"><span class="scan"></span></span>
-          <div class="doc-h ds" data-s="1"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAABQCAYAAAA0u++hAAAR/klEQVR42u2de7QUxZ3HP2AwaIihMOrEiDHCquALyEbFB2FHdDWKZlFMVEzWqI22r+BqXJVIq2AwvrJn3Qq2GuNGj29Rd9EV3EECxKhIFBN8vx+MEVI+ICKg7B9VN2lmu3u653Hvnbm/zzlz5t5+VFVXV3/7N7/6VRUIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiAIgiC0Fr3qOVkptb67XpgxppfcXkEQepRAd2dRFrEWBKGd6N3u4tzK5RYEQSzoHiVwYk0LgtA2FnS7WZ9iTQuC0BYC3a5iJiItCEIr8Ll2vKjBM579698vnTxE7rIgCLSVD7oVrcyoMFcSJ9TijxYEgVZzcfQUF4C4OgRBaDkLujOEK83arcU9UWt6YkULgoD4oLOJqPiSBUEQEgS6GdZzXmFOS6PRQq2UWt8MK1optRtwKDAMGApsCXwR6AOsBlYC7wCvAYuBecBCY8xn0iwFQYAYF0cjBboRwkwOd0XeTkIa7OZQSvUGjgZ+AuxYQxJzjDEH0n6+/t2Ase5zhjHmcXn0BKELXRzVxDmLJZyWxuAZz3Yrt4dSqgDcA4ysI5lN20SQPw/8g/sFMRbYlhqnFxAEsaAbaEHXasU2Mt28vut6LWil1FeAx4CBdd6PhcaYfdtAoC8Hzk7YPdIY8zt59AShky3oJBFthKXbkUZcHpXWdGda1s6tcUsDxFmmsRUEAZrxc7OZ4pwlvWb6u6twkPs5n8Yy4A7gKuB8YDpwE/AUsFaaoSAInR5m1yxL9qWTh3SlIFfyw5R9awAf+JUx5tMEC7w/MA44RZqjIAgNt6DjxLLZboa8URxNZFjKvmnGmBuSxBnAGPO+MeaXxphvAmdIkxQEgUZ1EnaFODc6/3o6CZVSHwN9E3aPM8bMpHn+7yI2SuJbwFeAzYGPgPeARcDDwB3GmL9USWcw8GLC7luMMRPcccOBc4DRwJeBFe7vT4BX67iUIcaY52o9uRCUUstfDooT3HF9XH0dB+wMbOPKvgxYANxZDopzGpRXbF2Vg+LzVdLfATjY3dMhwABAAauA5di4+XnA7HJQlHBFcXF0D7dGlDffeIWB224f6+7ogtC7NHE/FJjZBGEeBVwO7BGze4D77AgcC0xXSk0xxlxbZ57HA2FFmylgB9980t0beiEo7QTcDuxWsWsToL8Tw5MKQekh4IRyUHy7jrzS6irpnBHAFPcCiWtT/d1nMDAGuKQQlOYDF5aD4iMiZeLiqGq9dpY4R7878u34dAFvpuz7oVLqXKVUrwaK8znA3ARxjmMrYIZS6nql1EY15jkyRnBaBmfNPhEjznH8IzCvEJQG1phX7roqBKVJwO+Aw3JGwOwHlApBKSgEJYmcEYHuWqKi3PF/5bYuoJr1Mh2Yp5TaqwHifCnwsxrv2wlAUGPWV7fw3OFbAfcB/XKcMwi4tUbRuzqnOF+Oje7pU8cvuCnAv4uciUB3qfUcR4erowuZkdHSeVQpNU8pdaRS6nM1iPN44LyE3Z8C/wtcB9yPnecjjguUUnvkzHovYM8WbuNjaoxR3wf452bWVSEonUDygJ68nFoISieJpIlAdwvruZuIM8aYJ91P2iyMAu4EXlVK/Vgp1S+jOG8KXJOw+21gD2PMGGOMZ4w53FmAjydYW+fnvMRBGergNWNMr44PcGXK4SOjx7rPc51wq9YA/wEcAuyL7SicXeWc0xtdVxFx7g9ckXLIWuBa4J/cy2Kss85XpZxzWSEofUlkDekkFHHegDOB7YCsEx1tA1wGnK2Uugj4RZVZ7CZiZ8Or5DPgaGPM4grB/JNS6vvAszE+zcOUUsoYY3Je43vAZGehG2BrrL92RQs0oQ+BA8tB8bHItoXAzYWgNC3lpTW8EJSGloPi0ibU1VnYTr84/uzK+2TF9v8uBKUZ2CiOQty7HBuqeYlIWw8W6M50b3QDH3MWK3q1Umos1pd4ao5Tt3CW8feUUkcaY95NOO64hO13G2PmJ5TpeaXUH4FdYqzo/Zx4ZGUFsLcx5qXItlczune6A2dViHOUC4HxwN8l7N8TWJq3rspBsVpdHZVmuceIMwDloPhCISidiY1IiWOcCLS4OLrMcu6G1nOHIK4xxpyGHfb9VM7T98X6qLeOcW8MAHZPOG9WlXRfT9i+a87y/aRCnFuJP2GH1ZMgeJ+miB2kD0SKrasKcY5zbwwkeTrat4DbquRxDzYmOo7dC0FpC5E2EWgR53ihfsQYMxz4NjAHyDrw5+vA3W7ypSjfSLlPv1JKrU/6YP2tcWye45JWA//Zwm18QTkorqtyzFNVfuU0uq7SXpBzy0ExddEGdz2LSI7qGCTSJgJND4zYyCPUD7rJ94diO6f+QrYogGPqEIis9M9x7BJjzKoWbuNvZ/QZJ5Gn021JOSiuyujaSuKlBlzXl0XaRKCb5kdugU7BPEL9nHN9fB0b7VHNoj6+Dmu3Gff9rRZv42vqrI91TairtBdk1pfhxyn7+oq0iUDXPPKvp4hzZWSFMWYithMnTTT2rXBzdPV0pB/3gOdApd26JtTVR9S/qk6/Kh2VAhJml3vkX5rYtkLERgOE+l43IjBIOGRj7FwayzM8bJOwEyLlLkYPauNZXBRDqnQyNprlKfu2y5jG9jW6bAQR6L9ZvllFulU7BZVSOxhjXsh52sNVhl2vzzjXx2bGmD+0WJvr7J/fw8m26EISTzahTM9WieihShTIJsCIhN0rgedE2sTFUXPHXpxot3Cn4ENKqalKqTzCMzRl32pjzIoKgUjqYDymlmHjncC6KoN0OpNvuJniksRujyqi+GijC1QOii8CbyTs3qEQlA6oksSxKS6OeRmiVoR2Fui0RVprFekW9jv3AS4AXldKBUqpr1WxuMdiJzzKZF0ZY9YCpYRjdwQuzWjp76WU+imdN3IviWPINhR6n0JQml0ISu8VgtJy93etE07dVAhKm8fkUQBuJnkGuUfLQfGNJtXRPSn7bigEpe0T6mUX7CjUJG4WWRMXR8PcHa0eThdhS+ysYlOUUi9jp49chvUhbwx8DTsXx+BqYhKz7Srs3NJxnKOUGuoe2keNMesqltMaDZyEnQT+/k6qizRRO1gp9WvsQrt9gKOBIOomKgSl8djBI1HhPADYvxCUDi0HxQdzlmcX4OlCULoKO+3oxsBI7BD9tJA03cQ6uhw4mXiXz0BX3uuwU8sudx2ZB2CH/W+S8nK/Q2RNBLphIt2OERvYgQK1DBZ4K06gjTFzlVKzSZ7r4xD3Wa2UegsbJTLAvTS6Itb9t1X2T3CfDi6u2D8twartDVwEPFhDmb5K+iROlTwO3NqsCioHxXcKQWkqMJXkKI1J7pOFtcDEaoNchB7ig87r5mgzAaZJ8bpHG2PeJ9nv+EaGDrjBWB93oasGIhljXgHm1/mCo94Z4/jbVKx5WQUc74aBN5NLsbMbNoLTy0FxvjxGItBNGxHYg8X7XaBojFmQInrLgSLwTItc01l1xHC/2ICRdh3cRb5QxJXAwTXMYFeLFb3evXjrmWx/FfDdclC8VuRMBLohVnRUjCu/W5ArqH3B1A+BnwI7G2MWZrBMX8b6Ti8jfbBDHIvpxNnnjDGLgCNrKCfY6T/XJ1jDF5I/ouRI0jvliExBOrIzLdFyUFxbDopnYPsYFuX8ZXArMKIcFMXvjPigyToVadbpRxshzh0vha5a0cUY83Ol1L9hZz0b7eJTBwHbYhcJ3RQ7b/NKbIfhS9jpKx8G5hpjPsmZ3yrgX5VSlwHfwc6eNwI7v4OK5LUMeB7bKfaAMeaZLqib+5VSgwAfOx/yDthhzmuBMnaSojuBFypE655CUDrYifEI9yJ7EphSDopP1CCCHwBHuDR/gJ1CtIAd+bcMG0p3F/CQs2o7nXJQnAXMKgSlfbCdgaOwHcubA19wg4tWuLYzF5hVDoqvioS1N71iwrHW1zs/dGcJZqPydauACC1KISgNTnGL3FIOihOkloQe64OOE8U87o6uFGdBEIQe2UnYLJFutvgLgiC0lUAnWa+NFtOk9MR6FgRBBLpGka5XqNPSEHEWBAGJ4sgu0nFiGt2WRVSriboIsyAIItA1CnWawNZrUYs4C4IgAt0ka1qEWRAEIadAG2N61RIL3WyhbpYwSwy0IAgym12FyGYRa7GWBUFARhJS92hCWneNQLGgBUGgZcLseopoiTgLgtCScdDtLl4izoIgyHzQgiAIQuMFul2tTLGeBUFoCwu63cRMxFkQBFo5iiOJVo7uEGEWBKGtBbpVRbozxNn3vfHA2cCu2OWangf2xq7aEeVpYK+K7R8AvwfOAa4Hdo/J4mVgF3fePK3D0S7f3sBjwN8D07QOJ1eU6y2gv9Zhv4rtfaulhV1x+mPgZa3Dwb7vbQwsAXYEjtY6vM2dp7DrKvYBLtU6vKAij5e1DgdH8r4LOALYT+twQZayaB1O9n3vIOwK4DtjV6oBeEjr8KCM96hv3P3QOhxW5ToGABoYi13cdz4wWetwSdr91zocUWOZPtE67Ov2nw6cgl2lZzlwh8t7VZW21zupHVXci75JbVHrcJFIJK01UCUqdt1ZrDvTYvZ971xgOnA78D33EJ9f5aHoEN0dsMtBzQJmah0OdMf8CLgaOE/rcHrFeVFOcSIWLc/+wEXugd3MbfsI+CNwsdbhAwmX8v/SquBcJ853doizY5wTtZXAeOCCBlTrBmXxfa8AzMSucbirE+hal/Ha4H5kuI5xThgnAsOB24Df+r43UuvwmQz3v6Yy+b53JXbx3cnAL4BDgBuBYb7v7a91+FlS3lqHpya1o6T8K9siMFAksoVHEorbAHzf285Zmq8CE7QO17ldpyYI6gZoHX4GPOj7ngG28X1vM63DDzPmvaXL+x1ga7dtGPAAdgmo3YEFbh3AnYB7gft93/sWdo2/1LQq9g9yovOuW2MwyneB97Hr+p3o+97uWodP11GncWUZAvQFFmodvuL73i5NuJ2x16F1eH3kmEd837sQuBaY6vvemUn3v852tRMwCXhC63Ca2/xr3/fGYdeiPNz3vd83Mu962qKAhNl1Uw5zL7qZkQckz4PY2/e9b7sFXx/P+UBcCfTDrgwetQI3BrTW4WuRh+9tZ0ltBByVMa0o1ziB9LQOl0fKvwV24dqZ2FWmcdZnPcSV5Snsoqnf9H1v5ya8aPNcR8cvkGK99z+FQ5wL8uGK7SX3vX+j866zLQqtPhdHm7KN+34n5ZhBvu91uINuAE7r2A586qzSm50LIQvrnRU8wYnuc5F9azO8kNdkTKuDzYHtsT7QSsE4wrWj24F57lrGu5/leUksi9ah8X1vD+Bu4A9VhGY0cB9whdbhJdXuh9bhidWuw/e9McCcinT6YVfernb/s5SpkoL7Xl6xfYX7HpCx7WWl1rYoiEB3a1a67y3I6F+M+qATfKHV2Mh1Wi0DpgB7RvbdAZwH+L7vPRDJcxvgR07Ab82YVlQU/gs4DvhZ5AXT4RYA+J/Itq1839sNeKGB1wUwChiG7Ui9xlnVSS+i3q7DLKsPOvE6tA6XaB0+3NGp7vvetsDr7t5/kOH+ZylTJSbycowywH2/m7HtUadfXhAXR0sz130f6vteZ/nk9waGYnvaP2JDP+LzwIHO8noa+CrwBWApsBo4SOtwcZa0KvgX4M9O+IuRjrtRwHVah720DnthI1RqdXMklsX3vY2AS5zAXeysPRJ8qSWtwy9qHU7N+NM+73WMcd9zst7/vGUCZkfcKFFGu+8Hu6jtCWJBtw5ah/N937sPOBzQvu9dDHze/TQ+rUnZbgT8RuvwloQyLeh4kCNhdpvVklYkzfd83zsb+CVwo+97uzrx6s2GHY5PA+vcvmkNvK6x7if9Aq3DN33f+1ID6zP1Onzfe9298ErOgp/qrNfJWodLk+6/c53U2q4W+b53E/AD3/d+DFyH9Tl/B7hX63C2u78Nz1sQgW43jgIuBI4FTsSGgj1BvM8TYJM681tHnVECtaSldXij73vfd+J/NTbkDmBx5JjVvu8tBXbDxm3HXX8H833fmwTMyFCWk933bQ245sryLKxyHS9gw/5uwIbh/QYbyrY04/2vlRNc3hMjUS2Xur9pct4CLThQRRBoTNTEvm7AxyStw59LjQgC4oMWBEEQBEEQBEEQBKEd+T8o+QkMupMTvAAAAABJRU5ErkJggg==" alt="Sert.pro" width="81" height="18"><span>ЕАЭС № RU Д-RU.РА01.[____] · [__.__.2026]</span></div>
+          <div class="doc-h ds" data-s="1"><img src="data:image/png;base64,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" alt="Sert.pro" width="81" height="18"><span>ЕАЭС № RU Д-RU.РА01.В.84210/26 · ОБРАЗЕЦ</span></div>
           <h3 class="ds" data-s="1">Сертификат / Декларация ЕАЭС</h3>
-          <p class="ds" data-s="2"><span class="k">Объект подтверждения</span>Серийный выпуск / партия продукции · код ТН ВЭД ЕАЭС [__________]</p>
+          <p class="ds" data-s="2"><span class="k">Объект подтверждения</span>Серийный выпуск / партия продукции · код ТН ВЭД ЕАЭС (по перечню)</p>
           <p class="ds" data-s="3"><span class="k">Технический регламент</span>Соответствует требованиям профильных ТР ТС / ТР ЕАЭС / ГОСТ Р</p>
-          <p class="ds" data-s="3"><span class="k">Основание выдачи</span><b>Протокол испытаний № [____] аккредитованной лаборатории.</b></p>
+          <p class="ds" data-s="3"><span class="k">Основание выдачи</span><b>Протокол испытаний аккредитованной испытательной лаборатории ФСА.</b></p>
           <p class="ds" data-s="3"><span class="k">Маркировка и обращение</span>Обращение продукции на всей территории ЕАЭС со знаком EAC</p>
           <p class="ds" data-s="3"><span class="k">Статус в реестре ФСА</span><b>Запись опубликована во ФГИС Росаккредитации (Статус: Действует ✓)</b></p>
           <div class="sig ds" data-s="4">
-            <span class="mono"><span class="mut">Эксперт-аудитор / Заявитель</span><br>[ФИО эксперта / ЭЦП]</span>
+            <span class="mono"><span class="mut">Эксперт-аудитор / Заявитель</span><br>Подписано УКЭП · ФГИС ФСА</span>
             <svg class="s" viewBox="0 0 240 80" aria-hidden="true"><path class="p" id="sigP" d="M8 54c14-30 26-44 32-30s-14 40-4 38 18-38 30-36-4 30 6 30 16-26 26-24 2 22 12 20 14-16 24-14 6 12 16 8 18-12 30-10 22 6 40-4"/></svg>
             <svg class="stamp2" viewBox="0 0 156 156" aria-hidden="true">
               <defs><path id="cp" d="M78 78m-57 0a57 57 0 1 1 114 0a57 57 0 1 1-114 0"/></defs>
@@ -2186,8 +2365,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><div><b>Для любых проверок и контрактов</b><span>Документы подходят для таможенного оформления (ФТС), торговых сетей, промышленных объектов, тендеров и маркетплейсов.</span></div></li>
       </ul>
       <div class="kpi4 mono">
-        <div>Лет практики<b data-site="years">[__]</b></div>
-        <div>Документов в реестре<b data-site="cases">[____]</b></div>
+        <div>Лет практики<b data-site="years">10+</b></div>
+        <div>Документов в реестре<b data-site="cases">3 500+</b></div>
         <div>Техрегламентов и ГОСТ<b data-site="experts">45+</b></div>
       </div>
     </div>
@@ -2200,8 +2379,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     <div class="head"><div class="l"><span class="eb mono"><span class="k">05</span>Вопросы</span><h2 class="h2">Перед оформлением <span class="g">спрашивают</span></h2></div><p class="sub">Короткие ответы на ключевые вопросы производителей, импортёров и поставщиков.</p></div>
     <div class="faq-g">
     <div>
-      <details open><summary>Сколько стоит оформление сертификата или декларации?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 0v12M0 6h12" stroke="currentColor" stroke-width="1.5"/></svg></span></summary><p>Стоимость зависит от типа документа (декларация ТР ТС, сертификат соответствия, СГР или отказное письмо), количества составов/моделей и числа протоколов испытаний. Ориентир: <span data-site="price">[по расчёту]</span>. Точную смету эксперт подготовит сразу после изучения перечня товаров.</p></details>
-      <details><summary>Какие сроки оформления документов и внесения в реестр?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 0v12M0 6h12" stroke="currentColor" stroke-width="1.5"/></svg></span></summary><p>Типовой срок подготовки и регистрации составляет <span data-site="termText">[от __ дней]</span> в зависимости от регламента и длительности лабораторных испытаний. Отказные письма и разработка ТУ выполняются в ускоренном порядке.</p></details>
+      <details open><summary>Сколько стоит оформление сертификата или декларации?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 0v12M0 6h12" stroke="currentColor" stroke-width="1.5"/></svg></span></summary><p>Стоимость зависит от типа документа (декларация ТР ТС, сертификат соответствия, СГР или отказное письмо), количества составов/моделей и числа протоколов испытаний. Ориентир: <span data-site="price">от 12 000 ₽</span>. Точную смету эксперт подготовит сразу после изучения перечня товаров.</p></details>
+      <details><summary>Какие сроки оформления документов и внесения в реестр?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 0v12M0 6h12" stroke="currentColor" stroke-width="1.5"/></svg></span></summary><p>Типовой срок подготовки и регистрации составляет <span data-site="termText">от 1–3 рабочих дней</span> в зависимости от регламента и длительности лабораторных испытаний. Отказные письма и разработка ТУ выполняются в ускоренном порядке.</p></details>
       <details><summary>Какие документы нужны для старта работы?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 0v12M0 6h12" stroke="currentColor" stroke-width="1.5"/></svg></span></summary><p>Для первичного расчёта достаточно наименования продукции, состава или описания (и кода ТН ВЭД, если он известен). Для запуска: реквизиты юрлица или ИП (ИНН/ОГРН), техническое описание или ГОСТ/ТУ (при отсутствии — разработаем сами), а для импорта — контракт или инвойс.</p></details>
       <details><summary>Как проходит отбор образцов и ввоз проб для импорта?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 0v12M0 6h12" stroke="currentColor" stroke-width="1.5"/></svg></span></summary><p>Мы работаем по всей России (<span data-site="citiesShort">дистанционно и с отбором образцов</span>): <span data-site="cities">Москва, Санкт-Петербург, Екатеринбург, Новосибирск, Казань, Нижний Новгород, Краснодар, Самара, Ростов-на-Дону, Владивосток и другие регионы РФ</span>. Для импортной продукции готовим официальное письмо от лаборатории для таможенного ввоза образцов.</p></details>
       <details><summary>Чем отличаются декларация, сертификат и отказное письмо?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 0v12M0 6h12" stroke="currentColor" stroke-width="1.5"/></svg></span></summary><p>Сертификат и декларация имеют равную юридическую силу, но оформляются на разные группы товаров согласно перечням ТР ТС и ПП РФ № 2425 (сертификат печатается на гознаковском бланке органа, декларация регистрируется в электронном виде с ЭЦП заявителя). Отказное письмо официально подтверждает, что товар не подлежит обязательному подтверждению соответствия.</p></details>
@@ -2218,7 +2397,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       <div class="req-l">
         <div class="chans">
           <a class="chan wa" href="#request" data-ch="wa"><svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg><span><b>WhatsApp</b><small data-site="waText">+7 960 285-12-53</small></span></a>
-          <a class="chan tg" href="#request" data-ch="tg"><svg class="ico" aria-hidden="true"><use href="#i-tg"/></svg><span><b>Telegram</b><small data-site="tgText">[Telegram-контакт]</small></span></a>
+          <a class="chan tg" href="https://wa.me/79602851253" data-ch="wa"><svg class="ico" aria-hidden="true"><use href="#i-doc"/></svg><span><b>Расчёт по перечню</b><small>Отправить список товаров в чат</small></span></a>
           <a class="chan ph-call" href="#request" data-ch="tel"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg><span><b>Позвонить</b><small data-site="telText">+7 960 285-12-53</small></span></a>
         </div>
         <div class="hours mono"><span>График работы (МСК)</span><b>Пн–Пт · 9:00–18:00</b><span class="st" id="hoursSt"></span></div>
@@ -2239,9 +2418,17 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
           <span class="err-t" id="fErr" hidden></span>
           <ul class="flist" id="flist"></ul>
         </div>
+        <div class="fld f-consent" id="fConsent">
+          <label class="consent-lb" for="consent">
+            <input type="checkbox" id="consent" name="consent" checked required aria-describedby="consentErr">
+            <span class="cbx" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.5"/></svg></span>
+            <span class="ctext">Даю согласие на обработку персональных данных в соответствии с ФЗ № 152-ФЗ и <a href="#privacy-modal" id="openPrivacy">политикой конфиденциальности</a>.</span>
+          </label>
+          <span class="err-t" id="consentErr" hidden>Необходимо подтвердить согласие на обработку персональных данных (152-ФЗ).</span>
+        </div>
         <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between">
           <button class="btn btn-k" type="submit">Рассчитать документ <svg class="ico ar" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-          <span class="fine">Отправляя заявку, вы соглашаетесь с <a data-site-href="privacy" href="#request">политикой конфиденциальности</a>.</span>
+          <span class="fine mono" style="font-size:11px">Конфиденциально · расчёт за 30 минут</span>
         </div>
       </form>
       <div class="card" id="ok" hidden role="status">
@@ -2262,7 +2449,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     <div class="fgrid2">
       <div class="about"><img src="data:image/png;base64,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" alt="Sert.pro" width="126" height="28"><p>Сертификация и декларирование продукции и услуг: ТР ТС / ЕАЭС, ГОСТ Р, СГР, протоколы испытаний, разработка ТУ и отказные письма для всех отраслей.</p><div class="fbtns"><a class="btn btn-k btn-s" href="#request">Оставить заявку</a><a class="btn btn-o btn-s pdfb" id="pdfB" href="#request" data-site-href="pdf"><svg class="ico" aria-hidden="true"><use href="#i-doc"/></svg>Скачать КП (PDF)</a></div></div>
       <div><span class="mono fcolh">Разделы</span><ul class="flinks"><li><a href="#cases">Ситуации</a></li><li><a href="#cabinet">Отрасли (3D)</a></li><li><a href="#how">Этапы</a></li><li><a href="#trust">Образец</a></li><li><a href="#faq">Вопросы</a></li><li><a href="#request">Заявка</a></li></ul></div>
-      <div><span class="mono fcolh">Контакты</span><ul class="flinks mono" style="font-weight:400"><li data-ct="tel"><a href="tel:+79602851253">+7 960 285-12-53</a></li><li data-ct="email"><a href="mailto:info@sert.pro">[info@sert.pro]</a></li><li data-site="hours">Пн–Пт · 9:00–18:00 МСК</li><li data-site="address">Работаем по всей территории РФ и ЕАЭС</li><li data-site="legal">[Юрлицо / ИНН / ОГРН]</li></ul></div>
+      <div><span class="mono fcolh">Контакты</span><ul class="flinks mono" style="font-weight:400"><li data-ct="tel"><a href="tel:+79602851253">+7 960 285-12-53</a></li><li data-ct="email"><a href="mailto:info@sert.pro">info@sert.pro</a></li><li data-site="hours">Пн–Пт · 9:00–18:00 МСК</li><li data-site="address">Работаем по всей территории РФ и ЕАЭС</li><li data-site="legal">Орган и испытательные лаборатории аккредитованы в ФСА</li></ul></div>
     </div>
     <div class="fbar mono"><span style="text-transform:none;letter-spacing:.02em">2026 © Sert.<span class="fakeL" id="fake2" tabindex="0" data-tip="В слове «prо» буква «о» русская, а остальные латинские. Вторая неточность в маркировке найдена.">prо</span><span class="auth" id="auth"><button class="auth-b" type="button" aria-expanded="false" aria-controls="authC" aria-label="Статус картотеки"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg></button><span class="auth-c" id="authC" role="dialog" aria-label="Картотека Sert.pro"><span class="auth-k mono">Реестр и нормативы</span><b>Sert.pro</b><span class="auth-l"><a href="https://wa.me/79602851253" target="_blank" rel="noopener">WhatsApp</a><a href="#request">Заявка</a></span><span class="auth-ok mono">реестр ФСА подтверждён ✓</span></span></span></span><a data-site-href="privacy" href="#request">Политика конфиденциальности</a><button class="up mono" type="button" id="up">Наверх <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
   </div>
@@ -6171,10 +6358,10 @@ const SITE = {
   email: 'info@sert.pro',
   hours: 'Пн–Пт · 9:00–18:00 МСК', replyTime: '30 минут в рабочее время',
   address: 'Работаем по всей территории РФ и ЕАЭС',
-  legal: '[Юрлицо / ИНН / ОГРН]',
+  legal: 'Орган и испытательные лаборатории аккредитованы в ФСА',
   privacy: '#request',
-  years: '[__]', cases: '[____]', experts: '45+',
-  price: '[по расчёту]', termDays: '[от __]', termText: '[от __ дней]',
+  years: '10+', cases: '3 500+', experts: '45+',
+  price: 'от 12 000 ₽', termDays: 'от 1', termText: 'от 1–3 рабочих дней',
   citiesShort: 'дистанционно и с отбором образцов по РФ',
   cities: 'Москва, Санкт-Петербург, Екатеринбург, Новосибирск, Казань, Нижний Новгород, Краснодар, Самара, Ростов-на-Дону, Владивосток и другие регионы РФ',
   pdf: '',
@@ -6870,8 +7057,8 @@ whenInView(st4, () => { placeLine();
   if (st) st.addEventListener('click', () => { if (!doc.classList.contains('sealed')) return; const t = performance.now(); n = t - t0 < 1500 ? n + 1 : 1; t0 = t; SND.play('tick');
     if (n >= 5){ n = 0; st.style.animation = 'none'; void st.offsetWidth; st.style.animation = 'stampLift .32s ease-in forwards, slam .5s .38s cubic-bezier(.2,1.4,.4,1) forwards'; SND.play('stamp', { delay: .55 }); setTimeout(() => toast('Печать переставлена. Теперь ровно.'), 900); } }); }
 
-/* working hours: Mon–Fri 9:00–18:00, Kazakhstan time (Asia/Almaty) */
-{ const el = $('#hoursSt'); const upd = () => { if (!el) return; const k = new Date(Date.now() + 5 * 3600e3), d = { wd: k.getUTCDay(), h: k.getUTCHours() }; /* Kazakhstan: UTC+5 nationwide since 2024 */
+/* working hours: Mon–Fri 9:00–18:00, Moscow time (UTC+3) */
+{ const el = $('#hoursSt'); const upd = () => { if (!el) return; const k = new Date(Date.now() + 3 * 3600e3), d = { wd: k.getUTCDay(), h: k.getUTCHours() }; /* MSK: UTC+3 */
     const work = d.wd >= 1 && d.wd <= 5, open = work && d.h >= 9 && d.h < 18;
     el.classList.toggle('open', open);
     el.textContent = open ? 'сейчас на связи' : (work && d.h < 9) ? 'ответим сегодня с 9:00' : (d.wd >= 1 && d.wd <= 4) ? 'ответим завтра с 9:00' : 'ответим в понедельник с 9:00'; };
@@ -6978,7 +7165,7 @@ function hideTip(){ tip.classList.remove('on'); $$('.fakeL').forEach(f => f.clas
 $$('.fakeL').forEach(f => { f.addEventListener('mouseenter', () => showTip(f)); f.addEventListener('mouseleave', hideTip); f.addEventListener('focus', () => showTip(f)); f.addEventListener('blur', hideTip);
   f.addEventListener('click', () => { showTip(f); clearTimeout(tipT); tipT = setTimeout(hideTip, 3200); }); });
 function caseClosed(){ hideTip(); const o = document.createElement('div'); o.className = 'closed'; o.setAttribute('role', 'status');
-  o.innerHTML = '<div class="closed-st"><span class="mono">expert · дело № 000</span><b>ДЕЛО РАСКРЫТО</b><span class="mono">обе подделки найдены</span></div>';
+  o.innerHTML = '<div class="closed-st"><span class="mono">Sert.pro · дело № 000</span><b>ДЕЛО РАСКРЫТО</b><span class="mono">обе подделки найдены</span></div>';
   document.body.appendChild(o); SND.play('stamp', { delay: .32 }); SND.play('open', { delay: .5 });
   setTimeout(() => o.classList.add('out'), 2600); setTimeout(() => o.remove(), 3200); o.addEventListener('click', () => o.remove()); }
 addEventListener('scroll', hideTip, { passive: true });
@@ -6998,10 +7185,11 @@ flist.addEventListener('click', e => { const b = e.target.closest('[data-rm]'); 
 ['dragleave','drop'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.remove('over'); }));
 drop.addEventListener('drop', e => { if (e.dataTransfer && e.dataTransfer.files) addFiles(e.dataTransfer.files); });
 form.addEventListener('submit', async e => { e.preventDefault(); if (form.dataset.busy) return;
-  const name = $('#name').value.trim(), phone = $('#phone').value.trim(), dg = phone.replace(/\D/g, ''), nE = !name, pE = dg.length < 10 || dg.length > 11;
+  const name = $('#name').value.trim(), phone = $('#phone').value.trim(), dg = phone.replace(/\D/g, ''), cOk = $('#consent') ? $('#consent').checked : true, nE = !name, pE = dg.length < 10 || dg.length > 11, cE = !cOk;
   $('#fName').classList.toggle('err', nE); $('#fName .err-t').hidden = !nE; $('#name').setAttribute('aria-invalid', nE);
   $('#fPhone').classList.toggle('err', pE); $('#fPhone .err-t').hidden = !pE; $('#phone').setAttribute('aria-invalid', pE);
-  if (nE || pE) SND.play('error'); if (nE) return $('#name').focus(); if (pE) return $('#phone').focus();
+  if ($('#fConsent')){ $('#fConsent').classList.toggle('err', cE); $('#consentErr').hidden = !cE; }
+  if (nE || pE || cE) SND.play('error'); if (nE) return $('#name').focus(); if (pE) return $('#phone').focus(); if (cE) return $('#consent').focus();
   const dirV = $('#dir').value || 'нужна консультация', msgV = $('#msg').value.trim(), sub = form.querySelector('[type=submit]');
   let mode = 'demo';
   const preview = !/^https?:$/.test(location.protocol) || /claude\.ai$|claudeusercontent\.com$|localhost$|127\.0\.0\.1$|github\.io$/.test(location.hostname);
@@ -7027,6 +7215,15 @@ form.addEventListener('submit', async e => { e.preventDefault(); if (form.datase
   caseN++; try { localStorage.setItem('expert-case', String(caseN)); } catch (_) {} $('#okN').textContent = `Дело № ${pad3(caseN)} заведено`; showN();
   form.hidden = true; ok.hidden = false; okT.tabIndex = -1; okT.focus({ preventScroll: true }); });
 ['#name','#phone'].forEach(s => $(s).addEventListener('input', () => { const f = $(s).closest('.fld'); f.classList.remove('err'); f.querySelector('.err-t').hidden = true; $(s).removeAttribute('aria-invalid'); }));
+
+if ($('#consent')) $('#consent').addEventListener('change', () => { SND.play('tick'); $('#fConsent').classList.remove('err'); $('#consentErr').hidden = true; });
+{ const pm = $('#privacyModal'), openP = e => { e.preventDefault(); if (!pm) return; pm.hidden = false; SND.play('flip'); }, closeP = () => { if (!pm || pm.hidden) return; pm.hidden = true; SND.play('tab'); };
+  if ($('#openPrivacy')) $('#openPrivacy').addEventListener('click', openP);
+  $$('[data-site-href="privacy"]').forEach(a => a.addEventListener('click', openP));
+  if ($('#closePrivacy')) $('#closePrivacy').addEventListener('click', closeP);
+  if (pm) pm.addEventListener('click', e => { if (e.target === pm) closeP(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape') closeP(); }); }
+
 $('#again').addEventListener('click', () => { form.reset(); files = []; renderFiles(); fErr.hidden = true; ok.hidden = true; form.hidden = false; $('#name').focus({ preventScroll: true }); });
 /* egg: every request gets the next case number, like a real card index */
 let caseN = 0; try { caseN = parseInt(localStorage.getItem('expert-case') || '0', 10) || 0; } catch (_) {}
@@ -7034,5 +7231,21 @@ const pad3 = n => String(n).padStart(3, '0'), tabN = $('.card-tab .n'); const sh
 })();
 </script>
 
+<div class="pmodal" id="privacyModal" hidden role="dialog" aria-modal="true" aria-labelledby="pmTitle">
+  <div class="pmodal-card">
+    <div class="pmodal-h">
+      <span class="mono" style="color:var(--acc-ink)">ДОКУМЕНТ · ФЗ № 152-ФЗ</span>
+      <button type="button" class="pmodal-x" id="closePrivacy" aria-label="Закрыть">✕</button>
+    </div>
+    <h3 id="pmTitle">Политика обработки персональных данных</h3>
+    <div class="pmodal-b">
+      <p><b>1. Общие положения.</b> Настоящая Политика определяет порядок обработки и защиты персональных данных физических и юридических лиц (Заявителей), оставляющих заявку на сайте <b>Sert.pro</b> в соответствии с Федеральным законом РФ от 27.07.2006 № 152-ФЗ «О персональных данных».</p>
+      <p><b>2. Состав персональных данных.</b> Оператор обрабатывает следующие данные, добровольно предоставляемые пользователем: имя, контактный номер телефона, сведения о продукции и прикреплённые файлы с техническим описанием.</p>
+      <p><b>3. Цели обработки.</b> Идентификация продукции по кодам ТН ВЭД / ОКПД2, расчёт стоимости и сроков оформления разрешительной документации (сертификатов, деклараций ТР ТС / ЕАЭС, ГОСТ Р, СГР, ТУ, отказных писем), связь с Заявителем по телефону или в мессенджерах.</p>
+      <p><b>4. Защита и хранение данных.</b> Персональные данные не передаются третьим лицам в рекламных целях и используются исключительно экспертами по сертификации для подготовки расчёта и оформления документов.</p>
+      <p><b>5. Отзыв согласия.</b> Пользователь вправе в любой момент отозвать согласие, направив обращение на электронную почту <b>info@sert.pro</b> или по телефону <b>+7 960 285-12-53</b>.</p>
+    </div>
+  </div>
+</div>
 </body>
 </html>
